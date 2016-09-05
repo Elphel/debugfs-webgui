@@ -1,24 +1,36 @@
 # debugfs-webgui
-Simplify up the Linux kernel dynamic debug
 
-## target system requirements
-* webserver + php
+Simplify the Linux kernel dynamic debug
 
-## install
-* copy files to the target system 
-* make them accessible to the webserver
+## Features
+* multiple configs for each file
+* display only files of interest
+* update, save and restore configs
 
-## user manual
-* http://\<target-ip\>/\<webserver-path-to-degufs.html\>/debugfs.html
+## Target system requirements
+* web server (e.g. apache2) + PHP
 
-## behind the scenes
+## Install
+* transfer files to the target system 
+* make them accessible through the web server
 
-1. On page load debugfs.php restores the global config (if found) from disk or creates a new one from the /sys/kernel/debug/dynamic_debug/control.
+## Manual
+* http://target-ip/webserver-path-to-degufs.html/debugfs.html
+ * **Edit list** - displays all and allows to select the files of interest
+ * **Save to persistent storage** - copies current config from tmpfs to disk of the target system
+ * **Apply to debugfs** - applies config from the selected in web GUI files to debugfs
+ * **Switch off debug** - turns off debug of all of the files of interest
+ * Click on the filename to expand available debug options
+ * Check the checkbox next to the line number to enable line (adds **+p**) - uncheck to disable (**-p**) - the command is sent on change
+ * **read lines from debugfs** - updates line numbers if the source has changed but the old config is loaded, the checkboxes states pattern is kept.
+ * Use the green dropdown menu in the file's table to create and select individual configs.
 
-2. Current global config is stored and changed in tmpfs (/tmp/debugfs.json)
 
-3. Permanent global config is stored in the same folder as the debugfs.php.
-
-4. jquery.ajax.queue.js plugin is used to send ajax requests sequentlially to deal with a simultaneous access to the config file.
-
-5. 
+## Behind the scenes
+*  **f**, **l**, **m**, **t** flags are applied on load/refresh of the page
+* On page load/refresh debugfs.php tries to restore the global config in the following order: 
+1. from tmpfs (*/tmp/debugfs.json*) - it is a working copy
+2. from target system's persistent storage (mounted rootfs, in the same folder where *debugfs.php*). Copies to the working copy.
+3. from debugfs (*/sys/kernel/debug/dynamic_debug/control*). Reads and creates the working copy.
+* Global config format is *json*.
+* *jquery.ajax.queue.js* plugin is used to send ajax requests sequentially to resolve racing condition in access the global config file.
