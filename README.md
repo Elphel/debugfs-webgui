@@ -29,8 +29,8 @@ Simplify the Linux kernel dynamic debug
 ## Behind the scenes
 *  **f**, **l**, **m**, **t** flags are applied on load/refresh of the page
 * On page load/refresh debugfs.php tries to restore the global config in the following order: 
-1. from tmpfs (*/tmp/debugfs.json*) - it is a working copy
-2. from target system's persistent storage (mounted rootfs, in the same folder where *debugfs.php*). Copies to the working copy.
-3. from debugfs (*/sys/kernel/debug/dynamic_debug/control*). Reads and creates the working copy.
+ * from tmpfs (*/tmp/debugfs.json*) - it is a working copy
+ * from target system's persistent storage (mounted rootfs, in the same folder where *debugfs.php*). Copies to the working copy.
+ * from debugfs (*/sys/kernel/debug/dynamic_debug/control*). Reads and creates the working copy.
 * Global config format is *json*.
 * *jquery.ajax.queue.js* plugin is used to send ajax requests sequentially to resolve racing condition in access the global config file.
