@@ -7,6 +7,8 @@ Simplify the Linux kernel dynamic debug
 * display only files of interest
 * update, save and restore configs
 
+<img src="http://community.elphel.com/pictures/debugfs-webgui/debugfs-webgui.png" width="560" alt="debugfs-webgui screenshot" align='middle' >
+
 ## Target system requirements
 * web server (e.g. apache2) + PHP
 
