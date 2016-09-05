@@ -1,0 +1,56 @@
+html{
+    font-family: Arial;
+    font-size: 0.8em;
+}
+
+body{
+    padding: 10px;
+}
+
+table{
+    border-collapse:collapse;
+    border-radius: 3px;
+}
+
+th, td{
+    text-align: left;
+    padding: 3px 10px 3px 10px;
+    border-radius: 0px;
+    border: 1px solid rgba(180,180,180,0.5)
+}
+
+th {
+    background-color: rgba(200,200,200,0.5);
+}
+
+.even {
+    background-color: rgba(235,235,235,0.5);
+}
+
+.odd {
+    background-color: rgba(255,255,255,0.5);
+}
+
+.special {
+    background-color: rgba(100,200,100,0.5);
+}
+
+select {
+    border: 1px solid rgba(200,200,200,1);
+    border-radius: 2px;
+    font-family: Arial;
+    font-size: 1em;
+    background-color: rgba(200,200,200,0.5);
+    margin: 0px;
+    padding: 1px;
+}
+
+input {
+	-moz-appearance: none;
+	border: 1px solid rgba(200,200,200,1);
+}
+
+.tp{
+    width:20px;
+    height:20px;
+}
