@@ -29,6 +29,11 @@ Simplify the Linux kernel dynamic debug
 
 
 ## Behind the scenes
+* javascript + php
+* other javascript libraries:
+ * [jQuery](https://jquery.com/)
+ * [jquery.ajax.queue.js](https://blog.alexmaccaw.com/queuing-ajax-requests)
+ * [Bootstrap](http://getbootstrap.com/)
 *  **f**, **l**, **m**, **t** flags are applied on load/refresh of the page
 * On page load/refresh debugfs.php tries to restore the global config in the following order: 
  * from tmpfs (*/tmp/debugfs.json*) - it is a working copy
