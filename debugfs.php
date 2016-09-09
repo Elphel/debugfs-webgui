@@ -1,4 +1,13 @@
 <?php
+/*
+FILE NAME  : debugfs.php
+DESCRIPTION: dynamic debug backend
+REVISION: 1.00
+AUTHOR: Oleg Dzhimiev <oleg@elphel.com>
+LICENSE: AGPL, see http://www.gnu.org/licenses/agpl.txt
+Copyright (C) 2016 Elphel, Inc.
+*/
+
 //globals
 $config = "debugfs.json";
 $tmp_config = "/tmp/$config";

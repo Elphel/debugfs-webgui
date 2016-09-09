@@ -1,3 +1,12 @@
+/*
+FILE NAME  : debugfs.js
+DESCRIPTION: dynamic debug frontend
+REVISION: 1.00
+AUTHOR: Oleg Dzhimiev <oleg@elphel.com>
+LICENSE: AGPL, see http://www.gnu.org/licenses/agpl.txt
+Copyright (C) 2016 Elphel, Inc.
+*/
+
 var CUT_STRING_LIMIT = 20;
 var NLINES = 30;
 
