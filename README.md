@@ -40,8 +40,8 @@ Simpler, more flexible and convenient Linux kernel dynamic debug (dyndbg)
      * **f**,**l**,**m**,**t**, **apply to debugfs** - 100+ ms - depends on the number of files.
 
 ## Behind the scenes
-* Javascript + PHP
-* JavaScript libraries:
+* PHP - converts json config to queries and back, applies queries to dyndbg, stores configs, responds to ajax requests.
+* JavaScript + libraries:
  * [jQuery](https://jquery.com/)
  * [jquery.ajax.queue.js](https://blog.alexmaccaw.com/queuing-ajax-requests)
  * [Bootstrap](http://getbootstrap.com/)
