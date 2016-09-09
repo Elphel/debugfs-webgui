@@ -37,7 +37,7 @@ Simpler, more flexible and convenient Linux kernel dynamic debug (dyndbg)
  * from debugfs (*/sys/kernel/debug/dynamic_debug/control*). Copied into */tmp/debugfs.json*. **Save to persistent storage** - to create persistent config.
 * Depending on the number of selected files ajax requests can take some time: 
      * single debug message - quick
-     * **f**,**l**,**m**,**t**, **apply to debugfs** - 100+ms - depends on the number of files.
+     * **f**,**l**,**m**,**t**, **apply to debugfs** - 100+ ms - depends on the number of files.
 
 ## Behind the scenes
 * Javascript + PHP
