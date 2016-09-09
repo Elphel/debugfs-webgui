@@ -111,6 +111,7 @@ function init(){
         <tr>\
             <th style='display:none;' class='hidden_rows'>Show</th>\
             <th>File</th>\
+            <th>Config</th>\
         </tr>\
     ");
     
@@ -129,9 +130,11 @@ function init(){
             //file walk
             for(var i=0;i<r.length;i++){         
                 l        = init_ui_file(r[i],i);
+                t.append(l);
+                controls = init_ui_controls(r[i],i);
+                t.append(controls);
                 content  = init_ui_content(r[i],i);
-                controls = init_ui_controls(r[i],i);                 
-                t.append(l).append(controls).append(content);
+                t.append(content);
                 
                 j = init_ui_dropdown(r[i],i);
                 if (r[i].file=="drivers/elphel/framepars.c"){
@@ -289,6 +292,7 @@ function init_ui_file(record,index){
             <input id='cb_"+index+"' class='tp visibility_cb' type='checkbox' index='"+index+"' >\
         </td>\
         <td class='special filename' id='header_"+index+"' index='"+index+"' >"+record.file+"</td>\
+        <td class='special' id='conf_"+index+"' index='"+index+"' ></td>\
     ");
     
     if (record.state==0){
@@ -316,7 +320,7 @@ function init_ui_content(record,index){
     content.append(
         $("<td>").addClass("hidden_rows").hide()
     ).append(
-        $("<td>",{id:"content_td"})
+        $("<td>",{id:"content_td",colspan:"2"})
     );
     
     return content;
@@ -337,7 +341,7 @@ function init_ui_controls(record,index){
     controls.append(
         $("<td>").addClass("hidden_rows").hide()
     ).append(
-        $("<td>",{id:"controls_td"})
+        $("<td>",{id:"controls_td",colspan:"2"})
     );
     
     var bc0 = $("<button>",{
@@ -390,7 +394,7 @@ function init_ui_controls(record,index){
         });
     });
 
-    var pre_bc1 = $("<span>",{title:"Current config name"}).html("&nbsp;&nbsp;config:&nbsp;");
+    var pre_bc1 = $("<span>",{title:"Current config name"}).html("");
     
     var dc0_b = $("<button>",{
         class:"btn btn-default btn-sm btn-success dropdown-toggle",
@@ -461,7 +465,9 @@ function init_ui_controls(record,index){
     
     var dc0 = $("<div>",{class:"btn-group",role:"group"}).append(dc0_b).append(dc0_ul);
     
-    controls.find("#controls_td").append(bc0).append(pre_bc1).append(dc0);
+    controls.find("#controls_td").append(bc0);//.append(pre_bc1).append(dc0);
+    
+    $("#conf_"+index).append(pre_bc1).append(dc0);
     
     return controls;
 }
@@ -508,7 +514,8 @@ function dropdown_add_list_item(record,index,j){
         dropdown_select_config(index,confindex);
     });
     
-    $("#controls_"+index).find("ul").append(lentry);
+    //$("#controls_"+index).find("ul").append(lentry);
+    $("#conf_"+index).find("ul").append(lentry);
 }
 
 function dropdown_select_config(index,config_index){
