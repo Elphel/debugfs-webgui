@@ -234,7 +234,7 @@ if ($cmd=="do_nothing"){
     if (!is_file($tmp_config)) {
         if (is_file($config)) {
             copy($config,$tmp_config);
-            $json_data = file_get_contents($tmp_config);
+            $json_data = file_get_contents($config);
             echo $json_data;
         }else{
             $arr = get_control($file);
