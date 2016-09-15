@@ -40,9 +40,11 @@ function init(){
     }).css({margin:"0px 0px 0px 10px"}).html("Save to persistent storage");
     
     b1.click(function(){
+        spin_start();
         $.ajax({
             url: "debugfs.php?cmd=savetofs",
-            queue: true
+            queue: true,
+            success: spin_stop
         });
     });
     
@@ -52,9 +54,11 @@ function init(){
     }).css({margin:"0px 0px 0px 10px"}).html("Apply to debugfs");
     
     b2.click(function(){
+        spin_start();
         $.ajax({
             url: "debugfs.php?cmd=restore",
-            queue: true
+            queue: true,
+            success: spin_stop
         });
     });    
     
@@ -72,7 +76,7 @@ function init(){
     f1.html("&nbsp;l&nbsp;").append(f1_cb);
     f2.html("&nbsp;m&nbsp;").append(f2_cb);
     f3.html("&nbsp;t&nbsp;").append(f3_cb);
-
+    
     var b3 = $("<button>",{
         title: "Enable/disable debug messages for selected files"
     }).css({
@@ -80,27 +84,43 @@ function init(){
     }).html("Switch off debug").click(function(){
         if ($(this).html()=="Switch off debug"){
             $(this).html("Switch on debug");
+            spin_start();
             $.ajax({
                 url: "debugfs.php?cmd=setflag&flag=-p",
-                queue: true
+                queue: true,
+                success: spin_stop
             });
         }else{
             $(this).html("Switch off debug");
+            spin_start();
             $.ajax({
                 url: "debugfs.php?cmd=restore",
-                queue: true
+                queue: true,
+                success: spin_stop
             });
         }
     });
     
     $("body").append($("<div>",{id:"control_panel"}).css({
-        padding:"15px 20px 20px 20px",
+        padding:"15px 60px 20px 20px",
         background: "rgba(100,200,100,1)",
         position: "fixed",
         "z-index": "100",
         border: "1px solid rgba(180,180,180,0.5)"
     }).append(b0).append(b1).append(b2).append(b3).append(f0).append(f1).append(f2).append(f3));
         
+    var busy_icon = $("<span>",{id:"some-cog",class:"glyphicon glyphicon-globe"}).css({
+        position: "absolute",
+        top: Math.floor($("#control_panel").outerHeight(true)/2-17)+"px",
+        right: "12px"
+    });
+    
+    $("#control_panel").append(busy_icon);
+    
+    spin_start();
+    
+    //busy_icon.addClass("glyphicon glyphicon-globe");
+    
     var shift = $("#control_panel").outerHeight(true)+parseInt($("#control_panel").css("top"),10)+2;
     
     //list header
@@ -174,10 +194,13 @@ function init(){
                 else                         sign = "-";
                     
                 flag = $(this).attr("id")[0];
-                                  
+                
+                spin_start();
+                
                 $.ajax({
                     url: "debugfs.php?cmd=setflag&flag="+sign+flag,
-                    queue: true
+                    queue: true,
+                    success: spin_stop
                 });
             });
             
@@ -188,8 +211,18 @@ function init(){
             //when everything is parsed. do something.
             // apply config to debugfs
             $("#b2").click();
+            
+            spin_stop();
         }
     });
+}
+
+function spin_start(){
+    $("#some-cog").addClass("gly-spin");
+}
+
+function spin_stop(){
+    $("#some-cog").removeClass("gly-spin");
 }
 
 function fill_content(record,index,target){
@@ -271,9 +304,11 @@ function fill_content_rebind_events(){
 
         debugfs_data[index].configs[j].lines[subindex].flags = flags;
         //console.log($(this).attr("file")+", "+$(this).attr("line")+", "+$(this).prop("checked"));
+        spin_start();
         $.ajax({
             url: "debugfs.php?cmd=echo&conf="+j+"&file="+$(this).attr("file")+"&line="+$(this).attr("line")+"&flags="+flags,
-            queue: true
+            queue: true,
+            success: spin_stop
         });
     });
     
@@ -354,6 +389,7 @@ function init_ui_controls(record,index){
         var id = $(this).attr("id");
         id = id.substr(id.indexOf("_")+1);
         file = $(this).attr("file");
+        spin_start();
         $.ajax({
             url:"debugfs.php?cmd=reread&file="+file,
             queue: true,
@@ -390,6 +426,7 @@ function init_ui_controls(record,index){
                 fill_content_rebind_events();
                 
                 update_debugfs_config(id);
+                spin_stop();
             }
         });
     });
@@ -544,11 +581,13 @@ function dropdown_select_config(index,config_index){
 function update_debugfs_config(index){
     var file = debugfs_data[index].file;
     console.log("syncing debugfs config");
+    spin_start();
     //console.log(debugfs_data);
     $.ajax({
         type: "POST",
         url: "debugfs.php?cmd=sync&file="+file,
         data: JSON.stringify(debugfs_data),
-        dataType: "json"
+        dataType: "json",
+        success:spin_stop
     });
 }
