@@ -588,6 +588,6 @@ function update_debugfs_config(index){
         url: "debugfs.php?cmd=sync&file="+file,
         data: JSON.stringify(debugfs_data),
         dataType: "json",
-        success:spin_stop
+        complete:spin_stop
     });
 }
